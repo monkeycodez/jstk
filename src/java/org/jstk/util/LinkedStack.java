@@ -12,7 +12,13 @@ public final class LinkedStack<E>{
 	}
 
 	public final void push(E dat){
-		this.next = new LinkedStack<E>(dat);
+		if(next == null){
+			next = new LinkedStack<>(dat);
+		}else{
+			LinkedStack<E> nnode = new LinkedStack<E>(dat);
+			nnode.next = next;
+			next = nnode;
+		}
 	}
 
 	public final E pop(){

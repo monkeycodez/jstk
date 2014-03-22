@@ -26,14 +26,15 @@ public class BoolObj extends Obj{
 	}
 	
 	public static boolean istrue(Obj o,
-			ObjStack o_, ExprStream e, ExeEnv env){
+			ObjStack o_, ExeEnv env){
 		if(o == BoolObj.TRUE) return true;
 		if(o == BoolObj.FALSE) return false;
 		if(o == NullObj.nul) return false;
 		if(o instanceof CodeObj){
+	//		env.__print_frame();
 			return istrue(((CodeObj)o).getCode()
-					.eval(o_, env, e), 
-					o_, e, env);
+					.eval(o_, env), 
+					o_, env);
 		}
 	//	System.err.println(o);
 		return false;

@@ -20,10 +20,10 @@ public class CodeObj extends Obj{
 	}
 	
 	public static Obj exec_if_can(Obj o, ObjStack o_, 
-			ExprStream e, ExeEnv env){
+			ExeEnv env){
 		if(o instanceof CodeObj){
 			CodeObj c = (CodeObj) o;
-			return c.getCode().eval(o_, env, e);
+			return c.getCode().eval(o_, env);
 		}
 		return o;
 	}

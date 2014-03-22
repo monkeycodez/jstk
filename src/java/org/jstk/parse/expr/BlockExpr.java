@@ -15,12 +15,13 @@ public class BlockExpr implements  Expr{
 	}
 
 	@Override
-	public Obj eval(ObjStack stk_, ExeEnv env, ExprStream str){
+	public Obj eval(ObjStack ostk, ExeEnv env){
 		ObjStack stk = new ObjStack();
+		stk.push(ostk.pop());
 		stream.reset();
 		for(Expr e: stream){
-			stk.push(e.eval(stk, env, stream));
-		//        System.out.println(e);
+			stk.push(e.eval(stk, env));
+		//	System.out.println(e);
 		}
 		return stk.pop();
 	}

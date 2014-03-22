@@ -19,6 +19,7 @@ JSTK is a reverse-polish notation language running on the jvm.
 			"foo" - litteral string
 			i - variable or function
 			+*/^- - variable or function
+			,foo - a code atom
 		BLOCK:
 			a number of atoms, enclosed by a {}
 		List:
@@ -26,8 +27,7 @@ JSTK is a reverse-polish notation language running on the jvm.
 			is exec'ed, whatever is left on the stack becomes
 			the list
 		CODE:
-			any of the above, but with a ',' in front.  Delays
-			execution
+			a special kind of atom.  any of the above with a ',' in front
 
 	Builtin Functions:
 		"ATOM print", "ATOM println" - prints to stdout, aka System.out
@@ -39,6 +39,9 @@ JSTK is a reverse-polish notation language running on the jvm.
 			will check condition, then run body, then check
 			condition, then run body...
 		"ATOM ,identifier set" - the basic assignment operator
+		"( CODE_name (CODE_arg1 ...) ATOM ) defun" the basic function 
+			definition operator
+		"exit" - immediately ends execution
 	
 	Examples:
 		Hello World:
@@ -52,6 +55,17 @@ JSTK is a reverse-polish notation language running on the jvm.
 					i ++
 				}
 			) while
+		Function Hello World:
+			(
+				,hello
+				()
+				,{
+					"Hello World!" println
+				}
+			) defun
+			hello
+		
+			
 
 
 

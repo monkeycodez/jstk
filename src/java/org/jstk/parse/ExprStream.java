@@ -1,7 +1,6 @@
 package org.jstk.parse;
 
 import java.util.*;
-import org.jstk.lex.*;
 
 public class ExprStream implements Iterator<Expr>, Iterable<Expr>{
 

@@ -17,7 +17,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1, n2;
 			LObj l1 = null, l2 = null;
 			n1 = o.pop();
@@ -40,7 +40,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1, n2;
 			LObj l1 = null, l2 = null;
 			n1 = o.pop();
@@ -63,7 +63,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1, n2;
 			LObj l1 = null, l2 = null;
 			n1 = o.pop();
@@ -86,7 +86,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1, n2;
 			LObj l1 = null, l2 = null;
 			n1 = o.pop();
@@ -109,7 +109,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1;
 			LObj l1 = null, l2 = null;
 			n1 = o.pop();
@@ -130,7 +130,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1;
 			LObj l1 = null, l2 = null;
 			n1 = o.pop();
@@ -151,7 +151,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj o2 = o.pop();
 			Obj o1 = o.pop();
 			return o1.__eq__(o2);		
@@ -167,7 +167,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj o2 = o.pop();
 			Obj o1 = o.pop();
 			return o1.__lt__(o2);
@@ -182,7 +182,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj o2 = o.pop();
 			Obj o1 = o.pop();
 			return o1.__gt__(o2);
@@ -197,7 +197,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj o2 = o.pop();
 			Obj o1 = o.pop();
 			return o1.__le__(o2);
@@ -212,7 +212,7 @@ public abstract class SMath extends Func{
 		}
 
 		@Override
-		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+		public Obj exec(ObjStack o, ExeEnv env){
 			Obj o2 = o.pop();
 			Obj o1 = o.pop();
 			return o1.__ge__(o2);

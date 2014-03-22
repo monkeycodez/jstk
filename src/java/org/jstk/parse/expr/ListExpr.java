@@ -17,10 +17,10 @@ public class ListExpr implements Expr{
 	}
 
 	@Override
-	public Obj eval(ObjStack stk_, ExeEnv env, ExprStream str){
+	public Obj eval(ObjStack stk_, ExeEnv env){
 		ObjStack stk = new ObjStack();
 		for(Expr e: list){
-			stk.push(e.eval(stk, env, list));
+			stk.push(e.eval(stk, env));
 		}
 		return new ListObj(stk.to_list());
 	}

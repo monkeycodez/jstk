@@ -1,6 +1,5 @@
 package org.jstk.parse;
 
-import java.util.*;
 import org.jstk.lex.*;
 import org.jstk.parse.expr.BlockExpr;
 import org.jstk.parse.expr.CodeExpr;

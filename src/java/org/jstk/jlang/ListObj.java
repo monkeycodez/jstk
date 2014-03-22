@@ -1,11 +1,16 @@
 package org.jstk.jlang;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 
-public class ListObj extends Obj{
+public class ListObj extends Obj implements Iterable<Obj>{
 	
+	public Iterator<Obj> iterator(){
+		return list.iterator();
+	}
+
 	private List<Obj> list;
 	
 	public ListObj(List<Obj> l){

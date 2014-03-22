@@ -7,7 +7,6 @@ import org.jstk.jlang.Obj;
 import org.jstk.lex.*;
 import org.jstk.parse.ExeEnv;
 import org.jstk.parse.Expr;
-import org.jstk.parse.ExprStream;
 import org.jstk.parse.ObjStack;
 
 public class NameExpr implements Expr{
@@ -35,10 +34,10 @@ public class NameExpr implements Expr{
 	}
 
 	@Override
-	public Obj eval(ObjStack stk, ExeEnv env, ExprStream str){
+	public Obj eval(ObjStack stk, ExeEnv env){
 		Obj o = env.get(name);
 		if(o instanceof Func){
-			return ((Func)o).exec(stk, str, env);
+			return ((Func)o).exec(stk, env);
 		}else if(o == null){
 			System.err.println("No name found");
 			System.exit(-1);

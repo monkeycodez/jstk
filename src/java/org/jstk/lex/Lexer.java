@@ -57,6 +57,17 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 		s = s.replace("\\\"", "\"");
 		return s;
 	}
+	
+	private void do_comment(){
+		char c;
+		for(;;){
+			c = rdr.read();
+			if(c == '*' && rdr.peek() == '/'){
+				rdr.read();
+				return;
+			}
+		}
+	}
 
 	@Override
 	public Token next(){
@@ -75,6 +86,11 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 						Character.toString(c));
 			}else if(!Character.isWhitespace(c) &&
 					c != LexReader.EOF){
+				if(c == '/' && rdr.peek() == '*'){
+					rdr.read();
+					do_comment();
+					return next();
+				}
 				rdr.push(c);
 				String s = getw();
 				return new Token(TType.IDEN, s);

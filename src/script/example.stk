@@ -1,14 +1,18 @@
 (
 	,onrange
 	(,body ,start ,end)
+	/*
+	 * Function onrange.  Iterates from start to end.
+	 *    body is called on each iteration, and the current
+	 *    index is passed to body
+	 */
 	,{
 		start  ,i set
 		end ++ 
 		(
 			,{i end <}
 			,{
-				i
-				body eval
+				i body eval 
 				i ++
 			}
 		) while
@@ -16,7 +20,7 @@
 	}
 ) defun
 
-,{ i println } 1 20 onrange
+,println 1 20 onrange
 
 
 exit

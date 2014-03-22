@@ -12,9 +12,11 @@ JSTK is a reverse-polish notation language running on the jvm.
 
 	Syntax:
 		  JSTK is composed of atoms, blocks, lists and code objects.
-		Everything evaluates to something.
-
-		ATOM: a literal string/number or a variable/function. Ex:
+		Everything evaluates to something, except comments.
+		COMMENT:
+				Starts with a "/*" and ends with "*/", just like c
+		ATOM: 
+			a literal string/number or a variable/function. Ex:
 			123 - litteral number
 			"foo" - litteral string
 			i - variable or function

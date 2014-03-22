@@ -40,4 +40,23 @@ public abstract class Func extends Obj{
 		}
 		
 	};
+	
+	public static final Func eval = new Func(){
+
+		@Override
+		public String sname(){
+			return "eval";
+		}
+
+		@Override
+		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+			Obj prev = o.pop();
+			if(prev instanceof CodeObj){
+				CodeObj c = (CodeObj)prev;
+				return c.getCode().eval(o, env, e);
+			}
+			return prev;
+		}
+		
+	};
 }

@@ -138,6 +138,85 @@ public class SMath extends Func{
 		}
 				
 	};
+	
+	public static final SMath eq = new SMath(){
+		@Override
+		public String sname(){
+			return "==";
+		}
+
+		@Override
+		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+			Obj o2 = o.pop();
+			Obj o1 = o.pop();
+			return o1.__eq__(o2);		
+		}
+				
+	};
+	
+
+	public static final SMath lt = new SMath(){
+		@Override
+		public String sname(){
+			return "<";
+		}
+
+		@Override
+		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+			Obj o2 = o.pop();
+			Obj o1 = o.pop();
+			return o1.__lt__(o2);
+		}
+				
+	};
+	
+	public static final SMath gt = new SMath(){
+		@Override
+		public String sname(){
+			return ">";
+		}
+
+		@Override
+		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+			Obj o2 = o.pop();
+			Obj o1 = o.pop();
+			return o1.__gt__(o2);
+		}
+				
+	};
+	
+	public static final SMath le = new SMath(){
+		@Override
+		public String sname(){
+			return "<=";
+		}
+
+		@Override
+		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+			Obj o2 = o.pop();
+			Obj o1 = o.pop();
+			return o1.__le__(o2);
+		}
+				
+	};
+	
+	public static final SMath ge = new SMath(){
+		@Override
+		public String sname(){
+			return ">=";
+		}
+
+		@Override
+		public Obj exec(ObjStack o, ExprStream e, ExeEnv env){
+			Obj o2 = o.pop();
+			Obj o1 = o.pop();
+			return o1.__ge__(o2);
+		}
+				
+	};
+	
+	
+
 
 	
 }

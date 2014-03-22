@@ -33,6 +33,24 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 		}
 		return b.toString();
 	}
+	
+	private String gets(){
+		StringBuilder b = new StringBuilder();
+		char n = rdr.peek();
+		if(n == '\"') return "";
+		rdr.read();
+		while((n != '\"') && n != LexReader.EOF){
+			b.append(n);
+			n = rdr.read();
+			if(n == '\"' && b.charAt(b.length() - 1) == '\\'){
+				b.append(n);
+				n = rdr.peek();
+			}
+		}
+		String s = b.toString();
+		s = s.replace("\\\"", "\"");
+		return s;
+	}
 
 	@Override
 	public Token next(){
@@ -43,6 +61,9 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 				if(c == ':'){
 					String s = getw();
 					return new Token(TType.TAG, s);
+				}else if(c == '\"'){
+					String s = gets();
+					return new Token(TType.STRING, s);
 				}
 				return new Token(punct.get(c),
 						Character.toString(c));

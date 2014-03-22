@@ -1,18 +1,12 @@
 package org.jstk.lex;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public enum TType{
 	LPAREN('('),
 	RPAREN('\u0029'),
-//	COMMA(','),
-/*	EQU('='),
-	PLUS('+'),
-	MINUS('-'),
-	SLASH('/'),
-	STAR('*'),
-	LARROW('<'),
-	RARROW('>'),
-	QUESTION('?'),*/
-//	PIPE('|'),
+	COMMA(','),
 	DOT('.'),
 	LBRACE('{'),
 	RBRACE('}'),
@@ -20,22 +14,20 @@ public enum TType{
 	RBRACK(']'),
 	BQOUTE('`'),
 	OCTO('#'),
-//	DOLLAR('$'),
 	AT('@'),
 	COLON(':'),
 	SCOLON(';'),
-	/*BANG('!'),
-	AMPER('&'),
-	CARRET('^'),
-	PERCENT('%'),*/
 	SQUOTE('\''),
-	//TILDE('~'),
+	DQUOTE('\"'),
 	BSLASH('\\'),
 	IDEN(null),
 	KWORD(null),
 	TAG(null),
+	STRING(null),
 	EOF(null);
 
+	public static final Set<String> keywds = new HashSet<>();
+	
 
 	public Character punct(){
 		return this.punct;

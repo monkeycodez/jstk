@@ -7,4 +7,7 @@ public class NullObj extends Obj{
 	
 	public static final NullObj nul = new NullObj();
 
+	public String toString(){
+		return "null";
+	}
 }

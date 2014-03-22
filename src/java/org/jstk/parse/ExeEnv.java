@@ -15,8 +15,16 @@ public class ExeEnv{
 		add_global_func(SMath.sub);
 		add_global_func(SMath.mult);
 		add_global_func(SMath.div);
+		
+		add_global_func(SMath.eq);
+		add_global_func(SMath.lt);
+		add_global_func(SMath.gt);
+		add_global_func(SMath.le);
+		add_global_func(SMath.ge);
+
 		add_global_func(Func.print);
 		add_global_func(Func.println);
+		add_global_func(Func.eval);
 
 	}
 	

@@ -15,6 +15,7 @@ public class BlockExpr implements  Expr{
 		ObjStack stk = new ObjStack();
 		for(Expr e: stream){
 			stk.push(e.eval(stk, env, stream));
+		//	System.out.println(e);
 		}
 		return stk.pop();
 	}

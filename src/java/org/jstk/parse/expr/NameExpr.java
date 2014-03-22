@@ -1,10 +1,14 @@
-package org.jstk.parse;
+package org.jstk.parse.expr;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.jstk.jlang.Func;
 import org.jstk.jlang.Obj;
 import org.jstk.lex.*;
+import org.jstk.parse.ExeEnv;
+import org.jstk.parse.Expr;
+import org.jstk.parse.ExprStream;
+import org.jstk.parse.ObjStack;
 
 public class NameExpr implements Expr{
 
@@ -19,11 +23,15 @@ public class NameExpr implements Expr{
 		}
 		return new NameExpr(t.getText());
 	}
-	
+
 	private String name;
 
 	public NameExpr(String name) {
 		this.name = name;
+	}
+	
+	public String getName(){
+		return name;
 	}
 
 	@Override
@@ -31,6 +39,9 @@ public class NameExpr implements Expr{
 		Obj o = env.get(name);
 		if(o instanceof Func){
 			return ((Func)o).exec(stk, str, env);
+		}else if(o == null){
+			System.err.println("No name found");
+			System.exit(-1);
 		}
 		return o;
 	}

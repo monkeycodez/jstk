@@ -5,7 +5,7 @@ import org.jstk.jlang.*;
 
 public class ObjStack{
 	
-	private Deque<Obj> stk = new LinkedList<>();
+	private LinkedList<Obj> stk = new LinkedList<>();
 	
 	public ObjStack(){
 		
@@ -21,6 +21,12 @@ public class ObjStack{
 	
 	public Obj peek(){
 		return stk.peek();
+	}
+	
+	public List<Obj> to_list(){
+		List<Obj> nl = new LinkedList<>(stk);
+		Collections.reverse(nl);
+		return nl;
 	}
 
 }

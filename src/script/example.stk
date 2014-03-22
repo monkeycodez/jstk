@@ -1,0 +1,26 @@
+1 2 + 3 * println 
+1 1 == println  
+"foo" ,foo set
+foo println
+{"foo"} println 
+(1 2 3) println   
+(
+	,{foo "foo" ==} ,{ "bar" println }
+) cond
+
+(
+	,{false} ,{}
+	,{"foobar" println}
+) cond
+
+0 ,i set
+i println
+i ++
+i println
+(
+	,{20 i > }
+	,{
+		i println
+	 	i 1 + ,i set
+	 }
+) while

@@ -2,8 +2,14 @@ package org.jstk.parse;
 
 import java.util.*;
 import org.jstk.lex.*;
+import org.jstk.parse.expr.BlockExpr;
+import org.jstk.parse.expr.CodeExpr;
 import org.jstk.parse.expr.LBraceExpr;
+import org.jstk.parse.expr.ListExpr;
+import org.jstk.parse.expr.NameExpr;
 import org.jstk.parse.expr.RBraceExpr;
+import org.jstk.parse.expr.RParenExpr;
+import org.jstk.parse.expr.StringExpr;
 
 public class Parser{
 	private Lexer lex;
@@ -24,6 +30,7 @@ public class Parser{
 
 	public Expr parseNext(){
 		Token t = lex.next();
+	//	System.out.println(t);
 		switch(t.getType()){
 			case IDEN:
 				return NameExpr.create(t);
@@ -35,7 +42,8 @@ public class Parser{
 				ExprStream str = new ExprStream();
 				str.add(new LBraceExpr());
 				Expr next = parseNext();
-				for(; !(next instanceof RBraceExpr);
+				for(; !(next instanceof RBraceExpr) &&
+						next != null;
 						next = parseNext()){
 					str.add(next);
 				}
@@ -45,10 +53,16 @@ public class Parser{
 				return new RBraceExpr();
 				
 			case LPAREN:
-				//Opening expr
-				break;
+				str = new ExprStream();
+				next = parseNext();
+				for(; !(next instanceof RParenExpr) &&
+						next != null;
+						next = parseNext()){
+					str.add(next);
+				}
+				return new ListExpr(str);
 			case RPAREN:
-				return null;
+				return new RParenExpr();
 			case EOF:
 				return null;
 			default:

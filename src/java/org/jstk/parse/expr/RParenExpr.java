@@ -7,12 +7,11 @@ import org.jstk.parse.ExprStream;
 import org.jstk.parse.ObjStack;
 
 
-public class RBraceExpr implements Expr{
+public class RParenExpr implements Expr{
 
 	@Override
 	public Obj eval(ObjStack stk, ExeEnv env, ExprStream str){
-		env.pop_frame();
-		return stk.pop();
+		return null;
 	}
 
 }

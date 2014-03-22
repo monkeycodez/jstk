@@ -33,10 +33,14 @@ public class Token{
 
 	@Override
 	public String toString(){
-		if(type != TType.IDEN){
-			return type.toString();
+		switch(type){
+			case IDEN:
+				return "IDEN: <"+text+">";
+			case STRING:
+				return "STRING: <"+text+">";
+			default:
+				return type.name();
 		}
-		return "IDEN: <"+text+">";
 	}
 
 }

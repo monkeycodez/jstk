@@ -1,5 +1,6 @@
 package org.jstk.lex;
 
+import java.io.InputStream;
 import java.util.*;
 
 public class Lexer implements Iterable<Token>, Iterator<Token>{
@@ -19,6 +20,11 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 	}
 
 	public Lexer(String in) {
+		rdr = new LexReader(in);
+	}
+	
+
+	public Lexer(InputStream in) {
 		rdr = new LexReader(in);
 	}
 
@@ -67,9 +73,11 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 				}
 				return new Token(punct.get(c),
 						Character.toString(c));
-			}else if(!Character.isWhitespace(c)){
+			}else if(!Character.isWhitespace(c) &&
+					c != LexReader.EOF){
 				rdr.push(c);
-				return new Token(TType.IDEN, getw());
+				String s = getw();
+				return new Token(TType.IDEN, s);
 			}else{
 				// Whitespace, ignore
 			}

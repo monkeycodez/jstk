@@ -12,7 +12,7 @@ public class LBraceExpr implements Expr{
 
 	@Override
 	public Obj eval(ObjStack stk, ExeEnv env, ExprStream str){
-		//Push the stack
+		env.push_half_fram();
 		return NullObj.nul;
 	}
 

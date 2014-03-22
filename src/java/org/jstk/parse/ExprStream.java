@@ -22,6 +22,10 @@ public class ExprStream implements Iterator<Expr>, Iterable<Expr>{
 	public void add(Expr e){
 		exprs.add(e);
 	}
+	
+	public void reset(){
+		curr = 0;
+	}
 
 	@Override
 	public Iterator<Expr> iterator(){

@@ -9,8 +9,12 @@ public class LexReader{
 	private static final char  NONE = 0xEFFF;
 
 	private BufferedReader rdr;
+
 	private char pb = NONE;
 
+	public LexReader(InputStream s){
+		rdr = new BufferedReader(new InputStreamReader(s));
+	}
 	public LexReader(String s){
 		rdr = new BufferedReader(new StringReader(s));
 	}

@@ -1,5 +1,7 @@
 JSTK is a reverse-polish notation language running on the jvm.
 
+	Author: Matthew Gruda
+
 	  JSTK is currently in early-alpha stage, having just an example,
 	the cond operator (like if-then-else) and while loops. However, it will
 	soon make VB nervous.
@@ -24,17 +26,18 @@ JSTK is a reverse-polish notation language running on the jvm.
 			is exec'ed, whatever is left on the stack becomes
 			the list
 		CODE:
-			any of the above, but with a ',' in front.  Delays execution
+			any of the above, but with a ',' in front.  Delays
+			execution
 
 	Builtin Functions:
 		"ATOM print", "ATOM println" - prints to stdout, aka System.out
 		"(CODE_condition1 CODE_expr1 ...) cond" - the basic conditional
-			operator, if condition 1 is true, condition 2 is executed.
-			if list size is odd, the last CODE will be executed if 
-			nothing else is run, like an else block.
+			operator, if condition 1 is true, condition 2 is 
+			executed.  if list size is odd, the last CODE will be 
+			executed if nothing else is run, like an else block.
 		"(CODE_condition CODE_body) while" - the basic looping operator.
-			will check condition, then run body, then check condition,
-			then run body...
+			will check condition, then run body, then check
+			condition, then run body...
 		"ATOM ,identifier set" - the basic assignment operator
 	
 	Examples:

@@ -14,10 +14,23 @@
  3 ,i +=
  i println
  
+ :macro println
+ 
  (
  	,{ c }
  	,{ "catch" println }
  ) try 
+
+(
+	,tret
+	()
+	,{ 
+		"ret works" ret
+		2
+	}
+) defun
+
+tret println
 
 (
 	,onrange
@@ -28,7 +41,7 @@
 	 *    index is passed to body
 	 */
 	,{
-		start  ,i set
+		start  ,i setl
 		,end ++ 
 		(
 			,{i end <}
@@ -37,11 +50,15 @@
 				,i ++
 			}
 		) while
-			
 	}
+	:macro
 ) defun
 
-,println 1 20 onrange
+4 ,c set
+
+,{ 
+	c + println 
+} 1 20 onrange
 
 
 exit

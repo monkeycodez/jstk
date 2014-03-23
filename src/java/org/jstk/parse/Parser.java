@@ -9,6 +9,7 @@ import org.jstk.parse.expr.NameExpr;
 import org.jstk.parse.expr.RBraceExpr;
 import org.jstk.parse.expr.RParenExpr;
 import org.jstk.parse.expr.StringExpr;
+import org.jstk.parse.expr.TagExpr;
 
 public class Parser{
 
@@ -63,6 +64,11 @@ public class Parser{
 				return new ListExpr(str, t.getLineno());
 			case RPAREN:
 				return new RParenExpr();
+			case DOT:
+				//TODO: dot expr
+				return null;
+			case TAG:
+				return new TagExpr(t);
 			case EOF:
 				return null;
 			default:

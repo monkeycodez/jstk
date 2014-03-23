@@ -39,6 +39,21 @@ public abstract class Func extends Obj{
 		}
 
 	};
+	
+	public static final Func ret = new Func(){
+
+		@Override
+		public String sname(){
+			return "ret";
+		}
+
+		@Override
+		public Obj exec(ObjStack o, ExeEnv env){
+			env.fret();
+			return o.pop();
+		}
+
+	};
 
 	public static final Func exit = new Func(){
 
@@ -90,6 +105,31 @@ public abstract class Func extends Obj{
 				if(c.getCode() instanceof NameExpr){
 					NameExpr n = (NameExpr) c.getCode();
 					env.set_local(n.getName(), val);
+					return val;
+				}
+			}
+			throw new JSTKRuntimeException(
+					"second arg to set is not a coderef");
+		}
+
+	};
+	
+	public static final Func setl = new Func(){
+
+		@Override
+		public String sname(){
+			return "setl";
+		}
+
+		@Override
+		public Obj exec(ObjStack stk, ExeEnv env){
+			Obj p = stk.pop();
+			Obj val = stk.pop();
+			if(p instanceof CodeObj){
+				CodeObj c = (CodeObj) p;
+				if(c.getCode() instanceof NameExpr){
+					NameExpr n = (NameExpr) c.getCode();
+					env.set_local_new(n.getName(), val);
 					return val;
 				}
 			}

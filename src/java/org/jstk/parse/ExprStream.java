@@ -48,7 +48,9 @@ public class ExprStream implements Iterator<Expr>, Iterable<Expr>{
 		for(Expr e: this){
 			env.set_cline(e.lineno());
 			stk.push(e.eval(stk, env));
-		//	System.out.println(e);
+			if(env.is_ret()){
+				break;
+			}
 		}
 	}
 

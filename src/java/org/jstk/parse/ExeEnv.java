@@ -16,6 +16,8 @@ public final class ExeEnv{
 	private LinkedList<__frame> vstack = new LinkedList<>();
 
 	private int full_stacks = 1;
+	
+	private boolean ret = false;
 
 	private class __ref{
 
@@ -87,6 +89,8 @@ public final class ExeEnv{
 		add_global_func(Func.eval);
 		add_global_func(Func.cond);
 		add_global_func(Func.set);
+		add_global_func(Func.ret);
+		add_global_func(Func.setl);
 		add_global_func(Func.while_loop);
 		add_global_func(Func.try_f);
 
@@ -117,6 +121,10 @@ public final class ExeEnv{
 		vstack.peek().vframe.put(name, new __ref(val));
 	}
 
+	public void set_local_new(String name, Obj val){
+		vstack.peek().vframe.put(name, new __ref(val));
+	}
+
 	public void push_frame(String fname){
 		// System.err.println("Push frame");
 		full_stacks++;
@@ -125,10 +133,14 @@ public final class ExeEnv{
 	}
 
 	public void push_half_fram(){
+		push_half_frame("<ERROR>");
+	}
+	
+	public void push_half_frame(String fname){
 		// System.err.println("Push half frame");
 		full_stacks++;
 		__frame old = vstack.peek();
-		__frame nframe = new __frame(old.vframe, "<ERROR:BRACE>");
+		__frame nframe = new __frame(old.vframe, fname);
 		nframe.full_frame = false;
 		vstack.push(nframe);
 	}
@@ -184,5 +196,12 @@ public final class ExeEnv{
 		}
 		return trace;
 	}
-
+	
+	public boolean is_ret(){
+		return ret;
+	}
+	
+	public void fret(){
+		ret = !ret;
+	}
 }

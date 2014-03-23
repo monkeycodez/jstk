@@ -8,14 +8,16 @@ import org.jstk.parse.ObjStack;
 import org.jstk.parse.expr.NameExpr;
 
 public class StkFunc extends Func{
-	
-	private final static int list_contains = 3;
+
+	private static final int list_contains = 3;
 
 	private String name;
 
 	private String[] args;
 
 	private Expr body;
+	
+	private boolean macro = false;
 
 	public StkFunc(String name, String[] args, Expr body) {
 		super();
@@ -39,12 +41,19 @@ public class StkFunc extends Func{
 				System.out.println("ERROR: not enough args");
 			}
 		}
-		env.push_frame(name);
+		if(macro){
+			env.push_half_frame(name);
+		}else{
+			env.push_frame(name);
+		}
 		for(int i = 0; i < args.length; i++){
-		//	System.err.println(args[i] + ":"+ argo[i]);
+			// System.err.println(args[i] + ":"+ argo[i]);
 			env.set_local(args[i], argo[i]);
 		}
 		Obj result = body.eval(ostk, env);
+		if(env.is_ret()){
+			env.fret();
+		}
 		env.pop_frame();
 		return result;
 	}
@@ -61,13 +70,13 @@ public class StkFunc extends Func{
 			Obj o = ostk.pop();
 			if(!(o instanceof ListObj)){
 				// ERROR
-				System.err.println("ERROR: no defun list");
-				return null;
+				throw new JSTKRuntimeException(
+					"Bad func call, arg not a list");
 			}
 			ListObj ar = (ListObj) o;
-			if(ar.size() != list_contains){
-				System.err.println("ERROR: not enug args");
-				return null;
+			if(ar.size() < list_contains){
+				throw new JSTKRuntimeException(
+					"Bad func call, list not long enough");
 			}
 			// Parse body
 			Obj b = ar.get(2);
@@ -97,16 +106,31 @@ public class StkFunc extends Func{
 					Expr ace = ((CodeObj) arg).getCode();
 					if(ace instanceof NameExpr){
 						args.add(((NameExpr) ace)
-								.getName());
+							.getName());
 						continue;
 					}
 				}
-				System.err.println("ERROR: bad arg "
-						+ "declaration");
-				return null;
+				throw new JSTKRuntimeException(
+					"Bad arg format, needs"
+						+ " to be a coderef");
 			}
 			StkFunc func = new StkFunc(name,
-					args.toArray(new String[1]), body);
+				args.toArray(new String[1]), body);
+			if(ar.size() > list_contains){
+				for(int i = list_contains; i < ar.size(); i++){
+					Obj ol = ar.get(i);
+					if(!(ol instanceof TagObj)){
+						throw new JSTKRuntimeException(
+							"Bad arg format, needs"
+							+ " to be a tag");
+					}
+					switch(ol.toString()){
+						case ":macro": 
+							func.macro = true;
+							break;
+					}
+				}
+			}
 			env.set_local(func.name, func);
 			return func;
 		}

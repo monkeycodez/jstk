@@ -4,10 +4,12 @@ public class Token{
 	
 	private final TType type;
 	private final String text;
+	private final int lineno;
 
-	public Token(TType type, String text){
+	public Token(TType type, String text, int lineno){
 		this.type = type;
 		this.text = text;
+		this.lineno = lineno;
 	}
 
 	
@@ -41,6 +43,11 @@ public class Token{
 			default:
 				return type.name();
 		}
+	}
+
+
+	public int getLineno(){
+		return lineno;
 	}
 
 }

@@ -9,7 +9,7 @@ import org.jstk.parse.ExeEnv;
 import org.jstk.parse.Expr;
 import org.jstk.parse.ObjStack;
 
-public class NameExpr implements Expr{
+public final class NameExpr implements Expr{
 
 	private static String num_s = "(:?-|)\\d+";
 
@@ -18,15 +18,17 @@ public class NameExpr implements Expr{
 	public static Expr create(Token t){
 		Matcher m = num.matcher(t.getText());
 		if(m.matches()){
-			return new NumExpr(t.getText());
+			return new NumExpr(t.getText(), t.getLineno());
 		}
-		return new NameExpr(t.getText());
+		return new NameExpr(t);
 	}
 
-	private String name;
-
-	public NameExpr(String name) {
-		this.name = name;
+	private final String name;
+	private final int lineno;
+	
+	public NameExpr(Token t) {
+		this.lineno = t.getLineno();
+		this.name = t.getText();
 	}
 	
 	public String getName(){
@@ -43,5 +45,10 @@ public class NameExpr implements Expr{
 			System.exit(-1);
 		}
 		return o;
+	}
+
+	@Override
+	public int lineno(){
+		return lineno;
 	}
 }

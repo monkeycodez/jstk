@@ -1,3 +1,24 @@
+/* example.stk
+ *	an example JSTK program
+ */
+ 
+ (
+ 	,+=
+ 	(,val ,var)
+ 	,{
+ 		var eval val + var set
+ 	}
+ ) defun
+ 
+ 3 ,i set
+ 3 ,i +=
+ i println
+ 
+ (
+ 	,{ c }
+ 	,{ "catch" println }
+ ) try 
+
 (
 	,onrange
 	(,body ,start ,end)
@@ -8,12 +29,12 @@
 	 */
 	,{
 		start  ,i set
-		end ++ 
+		,end ++ 
 		(
 			,{i end <}
 			,{
 				i body eval 
-				i ++
+				,i ++
 			}
 		) while
 			

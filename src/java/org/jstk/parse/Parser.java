@@ -11,55 +11,56 @@ import org.jstk.parse.expr.RParenExpr;
 import org.jstk.parse.expr.StringExpr;
 
 public class Parser{
+
 	private Lexer lex;
 
-	public Parser(Lexer lex){
+	public Parser(Lexer lex) {
 		this.lex = lex;
 	}
-	
-	public Expr parseAll(){
+
+	public ExprStream parseAll(){
 		ExprStream e = new ExprStream();
-		for(Expr x = parseNext(); x != null;
-				x = parseNext()){
+		for(Expr x = parseNext(); x != null; x = parseNext()){
 			e.add(x);
 		}
-		return new BlockExpr(e);
+		return e;
 	}
-
 
 	public Expr parseNext(){
 		Token t = lex.next();
-	//	System.out.println(t);
+		// System.out.println(t);
 		switch(t.getType()){
 			case IDEN:
 				return NameExpr.create(t);
 			case COMMA:
-				return new CodeExpr(parseNext());
+				return new CodeExpr(parseNext(), 
+						t.getLineno());
 			case STRING:
-				return new StringExpr(t.getText());
+				return new StringExpr(t.getText(), t
+						.getLineno());
 			case LBRACE:
 				ExprStream str = new ExprStream();
-				str.add(new LBraceExpr());
+				str.add(new LBraceExpr(t.getLineno()));
 				Expr next = parseNext();
-				for(; !(next instanceof RBraceExpr) &&
-						next != null;
-						next = parseNext()){
+				for(; !(next instanceof RBraceExpr)
+						&& next != null; next =
+						parseNext()){
 					str.add(next);
 				}
 				str.add(next);
-				return new BlockExpr(str);
+				return new BlockExpr(str, t.getLineno());
 			case RBRACE:
-				return new RBraceExpr();
-				
+				return new RBraceExpr(t.getLineno());
+
 			case LPAREN:
 				str = new ExprStream();
 				next = parseNext();
-				for(; !(next instanceof RParenExpr) &&
-						next != null;
-						next = parseNext()){
+				for(; !(next instanceof RParenExpr)
+						&& next != null; next =
+						parseNext()){
 					str.add(next);
 				}
-				return new ListExpr(str);
+				return new ListExpr(str, t.getLineno());
 			case RPAREN:
 				return new RParenExpr();
 			case EOF:
@@ -69,6 +70,5 @@ public class Parser{
 		}
 		return null;
 	}
-
 
 }

@@ -10,19 +10,25 @@ import org.jstk.parse.ObjStack;
 
 public class ListExpr implements Expr{
 	
-	private ExprStream list;
+	private final ExprStream list;
+	private final int lineno;
 	
-	public ListExpr(ExprStream e){
+	public ListExpr(ExprStream e, int lineno){
 		list = e;
+		this.lineno = lineno;
 	}
 
 	@Override
 	public Obj eval(ObjStack stk_, ExeEnv env){
 		ObjStack stk = new ObjStack();
-		for(Expr e: list){
-			stk.push(e.eval(stk, env));
-		}
+		list.iterate(stk, env);
 		return new ListObj(stk.to_list());
 	}
+
+	@Override
+	public int lineno(){
+		return lineno;
+	}
+	
 
 }

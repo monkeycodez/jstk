@@ -1,7 +1,7 @@
 package org.jstk.jlang;
 
 
-public class NullObj extends Obj{
+public final class NullObj extends Obj{
 	
 	private NullObj(){}
 	
@@ -10,4 +10,11 @@ public class NullObj extends Obj{
 	public String toString(){
 		return "null";
 	}
+
+	@Override
+	public String type(){
+		return "NullObj";
+	}
+	
+
 }

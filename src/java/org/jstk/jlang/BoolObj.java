@@ -1,35 +1,34 @@
 package org.jstk.jlang;
 
 import org.jstk.parse.ExeEnv;
-import org.jstk.parse.ExprStream;
 import org.jstk.parse.ObjStack;
 
 
-public class BoolObj extends Obj{
+public final class BoolObj extends Obj{
 	
 	public static final BoolObj TRUE= new BoolObj("true"), 
 			FALSE = new BoolObj("false");
 
 	private String t;
-	private BoolObj(String s) {t = s;}
+	private BoolObj(final String s) {t = s;}
 	
 	public String toString(){
 		return t;
 	}
 	
-	public static BoolObj toObj(boolean b){
+	public static BoolObj toObj(final boolean b){
 		return b ? TRUE : FALSE;
 	}
 	
-	public static boolean toBoolean(Obj b){
+	public static boolean toBoolean(final Obj b){
 		return TRUE == b ? true : false;
 	}
 	
-	public static boolean istrue(Obj o,
-			ObjStack o_, ExeEnv env){
-		if(o == BoolObj.TRUE) return true;
-		if(o == BoolObj.FALSE) return false;
-		if(o == NullObj.nul) return false;
+	public static boolean istrue(final Obj o,
+			final ObjStack o_, final ExeEnv env){
+		if(o == BoolObj.TRUE) { return true; }
+		if(o == BoolObj.FALSE) { return false; }
+		if(o == NullObj.nul) { return false; }
 		if(o instanceof CodeObj){
 	//		env.__print_frame();
 			return istrue(((CodeObj)o).getCode()

@@ -8,6 +8,8 @@ import org.jstk.parse.ObjStack;
 import org.jstk.parse.expr.NameExpr;
 
 public class StkFunc extends Func{
+	
+	private final static int list_contains = 3;
 
 	private String name;
 
@@ -30,14 +32,14 @@ public class StkFunc extends Func{
 
 	@Override
 	public Obj exec(ObjStack ostk, ExeEnv env){
-		Obj argo[] = new Obj[args.length];
+		Obj[] argo = new Obj[args.length];
 		for(int i = argo.length - 1; i >= 0; i--){
 			argo[i] = ostk.pop();
 			if(argo[i] == null){
 				System.out.println("ERROR: not enough args");
 			}
 		}
-		env.push_frame();
+		env.push_frame(name);
 		for(int i = 0; i < args.length; i++){
 		//	System.err.println(args[i] + ":"+ argo[i]);
 			env.set_local(args[i], argo[i]);
@@ -63,7 +65,7 @@ public class StkFunc extends Func{
 				return null;
 			}
 			ListObj ar = (ListObj) o;
-			if(ar.size() != 3){
+			if(ar.size() != list_contains){
 				System.err.println("ERROR: not enug args");
 				return null;
 			}

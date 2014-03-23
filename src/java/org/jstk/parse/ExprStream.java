@@ -40,5 +40,16 @@ public class ExprStream implements Iterator<Expr>, Iterable<Expr>{
 	public void remove(){
 		throw new UnsupportedOperationException();
 	}
+	
+	//Iterates over the stream, using stk as the Obj Stack, and env as
+	//the var stack. modifies stk
+	public void iterate(ObjStack stk, ExeEnv env){
+		this.reset();
+		for(Expr e: this){
+			env.set_cline(e.lineno());
+			stk.push(e.eval(stk, env));
+		//	System.out.println(e);
+		}
+	}
 
 }

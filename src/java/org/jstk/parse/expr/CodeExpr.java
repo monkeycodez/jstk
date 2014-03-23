@@ -7,18 +7,27 @@ import org.jstk.parse.Expr;
 import org.jstk.parse.ObjStack;
 
 
-public class CodeExpr implements Expr{
+public final class CodeExpr implements Expr{
 	
-	private CodeObj code;
+	private final CodeObj code;
+	private final int lineno;
 	
-	public CodeExpr(Expr e){
+	public CodeExpr(Expr e, int line){
 		code = new CodeObj(e);
+		lineno = line;
 	}
 
 	@Override
 	public Obj eval(ObjStack stk, ExeEnv env){
 		return code;
 	}
+
+	@Override
+	public int lineno(){
+		return lineno;
+	}
+	
+	
 
 	
 	

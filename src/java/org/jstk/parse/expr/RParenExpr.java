@@ -6,13 +6,18 @@ import org.jstk.parse.Expr;
 import org.jstk.parse.ObjStack;
 
 
-public class RParenExpr implements Expr{
+public final class RParenExpr implements Expr{
 
 	@Override
 	public Obj eval(ObjStack stk, ExeEnv env){
-		//NOTE: should never be called
-		System.err.println("ERROR: RParenExpr.eval called");
+		//ERROR: this should never be called
 		return null;
+	}
+
+	@Override
+	public int lineno(){
+		//ERROR: this should never be called
+		return 0;
 	}
 
 }

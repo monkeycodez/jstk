@@ -4,6 +4,8 @@ import org.jstk.jlang.Obj;
 
 public interface Expr{
 
-	public Obj eval(ObjStack stk, ExeEnv env);
+	Obj eval(ObjStack stk, ExeEnv env);
+	
+	int lineno();
 	
 }

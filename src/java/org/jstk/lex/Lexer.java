@@ -22,7 +22,6 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 	public Lexer(String in) {
 		rdr = new LexReader(in);
 	}
-	
 
 	public Lexer(InputStream in) {
 		rdr = new LexReader(in);
@@ -39,11 +38,12 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 		}
 		return b.toString();
 	}
-	
+
 	private String gets(){
 		StringBuilder b = new StringBuilder();
 		char n = rdr.peek();
-		if(n == '\"') return "";
+		if(n == '\"')
+			return "";
 		rdr.read();
 		while((n != '\"') && n != LexReader.EOF){
 			b.append(n);
@@ -57,7 +57,7 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 		s = s.replace("\\\"", "\"");
 		return s;
 	}
-	
+
 	private void do_comment(){
 		char c;
 		for(;;){
@@ -77,15 +77,18 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 			if(punct.containsKey(c)){
 				if(c == ':'){
 					String s = getw();
-					return new Token(TType.TAG, s);
+					return new Token(TType.TAG, s,
+							rdr.get_line());
 				}else if(c == '\"'){
 					String s = gets();
-					return new Token(TType.STRING, s);
+					return new Token(TType.STRING, s,
+							rdr.get_line());
 				}
 				return new Token(punct.get(c),
-						Character.toString(c));
-			}else if(!Character.isWhitespace(c) &&
-					c != LexReader.EOF){
+						Character.toString(c),
+						rdr.get_line());
+			}else if(!Character.isWhitespace(c)
+					&& c != LexReader.EOF){
 				if(c == '/' && rdr.peek() == '*'){
 					rdr.read();
 					do_comment();
@@ -93,12 +96,13 @@ public class Lexer implements Iterable<Token>, Iterator<Token>{
 				}
 				rdr.push(c);
 				String s = getw();
-				return new Token(TType.IDEN, s);
+				return new Token(TType.IDEN, s, 
+						rdr.get_line());
 			}else{
 				// Whitespace, ignore
 			}
 		}
-		return new Token(TType.EOF, "");
+		return new Token(TType.EOF, "", rdr.get_line());
 	}
 
 	public Token peek(){

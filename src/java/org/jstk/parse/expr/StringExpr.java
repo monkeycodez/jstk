@@ -6,19 +6,25 @@ import org.jstk.parse.ExeEnv;
 import org.jstk.parse.Expr;
 import org.jstk.parse.ObjStack;
 
+public final class StringExpr implements Expr{
 
+	private final StrObj str;
 
-public class StringExpr implements Expr{
-	
-	private StrObj str;
-	
-	public StringExpr(String s){
+	private final int lineno;
+
+	public StringExpr(String s, int lineno) {
 		str = new StrObj(s);
+		this.lineno = lineno;
 	}
 
 	@Override
 	public Obj eval(ObjStack stk, ExeEnv env){
 		return this.str;
+	}
+
+	@Override
+	public int lineno(){
+		return lineno;
 	}
 
 }

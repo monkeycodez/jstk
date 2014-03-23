@@ -6,12 +6,23 @@ import org.jstk.parse.Expr;
 import org.jstk.parse.ObjStack;
 
 
-public class RBraceExpr implements Expr{
+public final class RBraceExpr implements Expr{
+
+	private final int lineno;
+	
+	public RBraceExpr(int lineno) {
+		this.lineno = lineno;
+	}
 
 	@Override
 	public Obj eval(ObjStack stk, ExeEnv env){
 		env.pop_frame();
 		return stk.pop();
+	}
+
+	@Override
+	public int lineno(){
+		return lineno;
 	}
 
 }

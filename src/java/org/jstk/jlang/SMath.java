@@ -1,8 +1,9 @@
 package org.jstk.jlang;
 
 import org.jstk.parse.ExeEnv;
-import org.jstk.parse.ExprStream;
+import org.jstk.parse.Expr;
 import org.jstk.parse.ObjStack;
+import org.jstk.parse.expr.NameExpr;
 
 
 public abstract class SMath extends Func{
@@ -19,16 +20,9 @@ public abstract class SMath extends Func{
 		@Override
 		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1, n2;
-			LObj l1 = null, l2 = null;
-			n1 = o.pop();
 			n2 = o.pop();
-			if(n1 instanceof LObj){
-				l1 = (LObj) n1;
-			}
-			if(n2 instanceof LObj){
-				l2 = (LObj) n2;
-			}
-			return new LObj(l1.num + l2.num);
+			n1 = o.pop();
+			return n1.__add__(n2);
 		}
 				
 	};
@@ -42,16 +36,9 @@ public abstract class SMath extends Func{
 		@Override
 		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1, n2;
-			LObj l1 = null, l2 = null;
-			n1 = o.pop();
 			n2 = o.pop();
-			if(n1 instanceof LObj){
-				l1 = (LObj) n1;
-			}
-			if(n2 instanceof LObj){
-				l2 = (LObj) n2;
-			}
-			return new LObj(l1.num - l2.num);
+			n1 = o.pop();
+			return n1.__sub__(n2);
 		}
 				
 	};
@@ -65,16 +52,9 @@ public abstract class SMath extends Func{
 		@Override
 		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1, n2;
-			LObj l1 = null, l2 = null;
-			n1 = o.pop();
 			n2 = o.pop();
-			if(n1 instanceof LObj){
-				l1 = (LObj) n1;
-			}
-			if(n2 instanceof LObj){
-				l2 = (LObj) n2;
-			}
-			return new LObj(l1.num * l2.num);
+			n1 = o.pop();
+			return n1.__mul__(n2);
 		}
 				
 	};
@@ -88,16 +68,25 @@ public abstract class SMath extends Func{
 		@Override
 		public Obj exec(ObjStack o, ExeEnv env){
 			Obj n1, n2;
-			LObj l1 = null, l2 = null;
-			n1 = o.pop();
 			n2 = o.pop();
-			if(n1 instanceof LObj){
-				l1 = (LObj) n1;
-			}
-			if(n2 instanceof LObj){
-				l2 = (LObj) n2;
-			}
-			return new LObj(l1.num / l2.num);
+			n1 = o.pop();
+			return n1.__div__(n2);
+		}
+				
+	};
+	
+	public static final SMath mod = new SMath(){
+		@Override
+		public String sname(){
+			return "%";
+		}
+
+		@Override
+		public Obj exec(ObjStack o, ExeEnv env){
+			Obj n1, n2;
+			n2 = o.pop();
+			n1 = o.pop();
+			return n1.__mod__(n2);
 		}
 				
 	};
@@ -110,15 +99,17 @@ public abstract class SMath extends Func{
 
 		@Override
 		public Obj exec(ObjStack o, ExeEnv env){
-			Obj n1;
-			LObj l1 = null, l2 = null;
-			n1 = o.pop();
-			if(n1 instanceof LObj){
-				l1 = (LObj) n1;
-				l2 = new LObj(l1.num + 1);
+			Obj n1 = o.pop();
+			if(n1 instanceof CodeObj){
+				Expr e = ((CodeObj)n1).getCode();
+				if(e instanceof NameExpr){
+					NameExpr n = (NameExpr) e;
+					Obj val = env.get(n.getName()).__inc__();
+					env.set_local(n.getName(), val);
+					return val;	
+				}
 			}
-			env.set_local(n1, l2);
-			return l2;
+			throw new JSTKRuntimeException(o + " is not a coderef");
 		}
 				
 	};
@@ -131,15 +122,17 @@ public abstract class SMath extends Func{
 
 		@Override
 		public Obj exec(ObjStack o, ExeEnv env){
-			Obj n1;
-			LObj l1 = null, l2 = null;
-			n1 = o.pop();
-			if(n1 instanceof LObj){
-				l1 = (LObj) n1;
-				l2 = new LObj(l1.num - 1);
+			Obj n1 = o.pop();
+			if(n1 instanceof CodeObj){
+				Expr e = ((CodeObj)n1).getCode();
+				if(e instanceof NameExpr){
+					NameExpr n = (NameExpr) e;
+					Obj val = env.get(n.getName()).__dec__();
+					env.set_local(n.getName(), val);
+					return val;	
+				}
 			}
-			env.set_local(n1, l2);
-			return l2;
+			throw new JSTKRuntimeException(o + " is not a coderef");
 		}
 				
 	};
@@ -155,6 +148,21 @@ public abstract class SMath extends Func{
 			Obj o2 = o.pop();
 			Obj o1 = o.pop();
 			return o1.__eq__(o2);		
+		}
+				
+	};
+	
+	public static final SMath ne = new SMath(){
+		@Override
+		public String sname(){
+			return "!=";
+		}
+
+		@Override
+		public Obj exec(ObjStack o, ExeEnv env){
+			Obj o2 = o.pop();
+			Obj o1 = o.pop();
+			return o1.__ne__(o2);		
 		}
 				
 	};

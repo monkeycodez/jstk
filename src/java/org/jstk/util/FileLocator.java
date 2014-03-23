@@ -1,7 +1,6 @@
 package org.jstk.util;
 
 import java.io.*;
-import java.nio.*;
 import java.nio.file.*;
 import java.util.*;
 import static java.nio.file.StandardOpenOption.*;

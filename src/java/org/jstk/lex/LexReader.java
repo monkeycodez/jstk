@@ -12,6 +12,8 @@ public class LexReader{
 
 	private char pb = NONE;
 
+	private int lineno = 0;
+	
 	public LexReader(InputStream s){
 		rdr = new BufferedReader(new InputStreamReader(s));
 	}
@@ -31,6 +33,8 @@ public class LexReader{
 					rdr.close();
 					pb = EOF;
 					return EOF;
+				}else if(t == '\n'){
+					lineno++;
 				}
 				pb = (char) t;
 				return pb;
@@ -54,6 +58,8 @@ public class LexReader{
 				rdr.close();
 				pb = EOF;
 				return EOF;
+			}else if(t == '\n'){
+				lineno++;
 			}
 			return (char) t;
 		}catch(IOException e){
@@ -69,6 +75,10 @@ public class LexReader{
 	
 	public void push(char c){
 		pb = c;
+	}
+	
+	public int get_line(){
+		return lineno;
 	}
 
 }

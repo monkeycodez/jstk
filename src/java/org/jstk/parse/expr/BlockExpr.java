@@ -6,24 +6,29 @@ import org.jstk.parse.Expr;
 import org.jstk.parse.ExprStream;
 import org.jstk.parse.ObjStack;
 
-public class BlockExpr implements  Expr{
+public final class BlockExpr implements  Expr{
 	
-	private ExprStream stream;
+	private final ExprStream stream;
+	private final int lineno;
 	
-	public BlockExpr(ExprStream stream){
+	public BlockExpr(ExprStream stream, int lineno){
 		this.stream = stream;
+		this.lineno = lineno;
 	}
 
 	@Override
 	public Obj eval(ObjStack ostk, ExeEnv env){
 		ObjStack stk = new ObjStack();
 		stk.push(ostk.pop());
-		stream.reset();
-		for(Expr e: stream){
-			stk.push(e.eval(stk, env));
-		//	System.out.println(e);
-		}
+		stream.iterate(stk, env);
 		return stk.pop();
 	}
 
+	@Override
+	public int lineno(){
+		return lineno;
+	}
+
+	
+	
 }

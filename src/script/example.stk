@@ -8,6 +8,7 @@
  	,{
  		var eval val + var set
  	}
+ 	:macro
  ) defun
  
  3 ,i set
@@ -24,17 +25,12 @@
 (1 2 3 4) ,lst set
 "Length of " print lst print " = " print
 lst .len println
-
-(
-	,tret
-	()
-	,{ 
-		"ret works" ret
-		2
-	}
-) defun
-
-tret println
+"Adding to list" println
+5 lst .add
+lst println
+"Testing set" println
+true 0 lst .set
+lst println
 
 (
 	,onrange
@@ -62,7 +58,7 @@ tret println
 
 ,{ 
 	c + println 
-} 1 20 onrange
+} 1 10 onrange
 
 
 exit

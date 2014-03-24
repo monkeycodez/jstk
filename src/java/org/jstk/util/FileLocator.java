@@ -14,7 +14,9 @@ import static java.nio.file.StandardOpenOption.*;
  * 		Write files: it will create the file if it is not created
  * 			in the specified folder.
  */
-public class FileLocator{
+public final class FileLocator{
+	
+	private FileLocator(){}
 	
 	private static String write_dir = ".";
 	private static List<String> read_dirs = new LinkedList<String>();

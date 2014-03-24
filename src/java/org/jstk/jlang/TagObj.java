@@ -12,7 +12,7 @@ public class TagObj extends Obj{
 	
 	
 	@Override
-	public BoolObj __eq__(Obj o){
+	public Obj __eq__(Obj o){
 		if(o instanceof TagObj){
 			return BoolObj.toObj(tag.equals(((TagObj)o).tag));
 		}
@@ -22,7 +22,7 @@ public class TagObj extends Obj{
 
 
 	@Override
-	public BoolObj __ne__(Obj o){
+	public Obj __ne__(Obj o){
 		if(o instanceof TagObj){
 			return BoolObj.toObj(!tag.equals(((TagObj)o).tag));
 		}

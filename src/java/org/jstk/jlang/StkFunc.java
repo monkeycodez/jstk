@@ -16,7 +16,7 @@ public class StkFunc extends Func{
 	private String[] args;
 
 	private Expr body;
-	
+
 	private boolean macro = false;
 
 	public StkFunc(String name, String[] args, Expr body) {
@@ -28,7 +28,6 @@ public class StkFunc extends Func{
 
 	@Override
 	public String sname(){
-		// TODO Auto-generated method stub
 		return name;
 	}
 
@@ -122,12 +121,16 @@ public class StkFunc extends Func{
 					if(!(ol instanceof TagObj)){
 						throw new JSTKRuntimeException(
 							"Bad arg format, needs"
-							+ " to be a tag");
+								+ " to be a tag");
 					}
 					switch(ol.toString()){
-						case ":macro": 
+						case ":macro":
 							func.macro = true;
 							break;
+						default:
+							throw new JSTKRuntimeException(
+								"Unknown defun option" +
+									ol);
 					}
 				}
 			}

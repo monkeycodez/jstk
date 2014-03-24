@@ -21,7 +21,7 @@ public final class ExeEnv{
 
 	private class __ref{
 
-		Obj ref;
+		private Obj ref;
 
 		__ref(Obj r) {
 			ref = r;
@@ -34,15 +34,15 @@ public final class ExeEnv{
 
 	private class __frame{
 
-		Map<String, __ref> vframe;
+		private Map<String, __ref> vframe;
 
-		String nframe;
+		private String nframe;
 
-		int line_exit = -1;
+		private int line_exit = -1;
 
-		int frameno = full_stacks;
+		private int frameno = full_stacks;
 
-		boolean full_frame = true;
+		private boolean full_frame = true;
 
 		__frame(Map<String, __ref> fframe, String nfr) {
 			nframe = nfr;

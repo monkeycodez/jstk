@@ -9,6 +9,13 @@ public abstract class Func extends Obj{
 	public abstract String sname();
 
 	public abstract Obj exec(ObjStack ostk, ExeEnv env);
+	
+	public static Obj exec_if_can(Obj o, ObjStack stk, ExeEnv env){
+		if(o instanceof Func){
+			return ((Func)o).exec(stk, env);
+		}
+		return o;
+	}
 
 	public static final Func print = new Func(){
 

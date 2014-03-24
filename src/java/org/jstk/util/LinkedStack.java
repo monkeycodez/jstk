@@ -11,7 +11,7 @@ public final class LinkedStack<E>{
 		dat  = bot;
 	}
 
-	public final void push(E dat){
+	public void push(E dat){
 		if(next == null){
 			next = new LinkedStack<>(dat);
 		}else{
@@ -21,7 +21,7 @@ public final class LinkedStack<E>{
 		}
 	}
 
-	public final E pop(){
+	public E pop(){
 		if(this.next != null){
 			LinkedStack<E> e = this.next;
 			this.next = null;
@@ -30,14 +30,14 @@ public final class LinkedStack<E>{
 		return this.dat;
 	}
 
-	public final E peek(){
+	public E peek(){
 		if(this.next != null){
 			return this.next.dat;
 		}
 		return dat;
 	}
 
-	public final boolean is_empty(){
+	public boolean is_empty(){
 		return this.next == null && this.dat == null;
 	}
 

@@ -20,7 +20,7 @@ public class LObj extends Obj{
 	}
 	
 	@Override
-	public BoolObj __eq__(Obj o){
+	public Obj __eq__(Obj o){
 		if(o instanceof LObj){
 			return BoolObj.toObj(num == ((LObj)o).num);
 		}
@@ -28,7 +28,7 @@ public class LObj extends Obj{
 	}
 
 	@Override
-	public BoolObj __gt__(Obj o){
+	public Obj __gt__(Obj o){
 		if(o instanceof LObj){
 			return BoolObj.toObj(num > ((LObj)o).num);
 		}
@@ -36,7 +36,7 @@ public class LObj extends Obj{
 	}
 
 	@Override
-	public BoolObj __lt__(Obj o){
+	public Obj __lt__(Obj o){
 		if(o instanceof LObj){
 			return BoolObj.toObj(num < ((LObj)o).num);
 		}
@@ -44,7 +44,7 @@ public class LObj extends Obj{
 	}
 
 	@Override
-	public BoolObj __ge__(Obj o){
+	public Obj __ge__(Obj o){
 		if(o instanceof LObj){
 			return BoolObj.toObj(num >= ((LObj)o).num);
 		}
@@ -52,7 +52,7 @@ public class LObj extends Obj{
 	}
 
 	@Override
-	public BoolObj __le__(Obj o){
+	public Obj __le__(Obj o){
 		if(o instanceof LObj){
 			return BoolObj.toObj(num <= ((LObj)o).num);
 		}
@@ -61,7 +61,7 @@ public class LObj extends Obj{
 
 
 	@Override
-	public BoolObj __ne__(Obj o){
+	public Obj __ne__(Obj o){
 		if(o instanceof LObj){
 			return BoolObj.toObj(num != ((LObj)o).num);
 		}

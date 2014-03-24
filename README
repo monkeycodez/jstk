@@ -21,7 +21,9 @@ JSTK is a reverse-polish notation language running on the jvm.
 			"foo" - litteral string
 			i - variable or function
 			+*/^- - variable or function
-			,foo - a code atom
+			,foo - a coderef atom.  This form is very important
+		TAG:
+			:TNAME - a tag of "TNAME"
 		BLOCK:
 			a number of atoms, enclosed by a {}
 		List:
@@ -30,6 +32,16 @@ JSTK is a reverse-polish notation language running on the jvm.
 			the list
 		CODE:
 			a special kind of atom.  any of the above with a ',' in front
+
+	Execution:
+		every statement is evaluated and results pushed on the Obj stack. 
+		 litterals evaluate to themselves.  Functions can pop ostack to
+		 get arguments.  A CODE statement evaluates to a CodeObj, which 
+		 can then be used for assigns, callbacks with exec, etc.
+
+		The variable stack (vstack) stores variables.  Any name defined
+		 in a global scope will always be avalible, but any other name
+		 works like a local variable simmilar to other languages.
 
 	Builtin Functions:
 		"ATOM print", "ATOM println" - prints to stdout, aka System.out
@@ -40,9 +52,20 @@ JSTK is a reverse-polish notation language running on the jvm.
 		"(CODE_condition CODE_body) while" - the basic looping operator.
 			will check condition, then run body, then check
 			condition, then run body...
-		"ATOM ,identifier set" - the basic assignment operator
-		"( CODE_name (CODE_arg1 ...) ATOM ) defun" the basic function 
-			definition operator
+		"ret" - returns from the function.  Whatever is on top of the ostac
+			is returned
+		"( statement1 statement2 ) try" - the basic try-catch operator.
+			statement1 is executed, and if it throws an error, 
+			the ExceptObj is pushed on the stack and statement2
+			is executed
+		"ATOM ,coderef set" - the basic assignment operator, will
+			overwrite the previous value of coderef.  
+		"setl" - like set, but it will not overwrite the value of 
+			coderef in a previous frame
+		"( CODE_name (CODE_arg1 ...) statement :Tags... ) defun" the basic function 
+			definition operator. Can have multiple :Tags on the end,
+			Avalible tags:
+				:macro - will not push a full vstack frame
 		"exit" - immediately ends execution
 	
 	Examples:

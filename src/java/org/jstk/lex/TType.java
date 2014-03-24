@@ -5,7 +5,7 @@ import java.util.Set;
 
 public enum TType{
 	LPAREN('('),
-	RPAREN('\u0029'),
+	RPAREN(')'),
 	COMMA(','),
 	DOT('.'),
 	LBRACE('{'),

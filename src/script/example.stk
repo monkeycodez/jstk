@@ -21,6 +21,10 @@
  	,{ "catch" println }
  ) try 
 
+(1 2 3 4) ,lst set
+"Length of " print lst print " = " print
+lst .len println
+
 (
 	,tret
 	()

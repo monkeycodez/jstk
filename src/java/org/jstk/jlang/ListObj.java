@@ -4,16 +4,15 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-
 public class ListObj extends Obj implements Iterable<Obj>{
-	
+
 	public Iterator<Obj> iterator(){
 		return list.iterator();
 	}
 
 	private List<Obj> list;
-	
-	public ListObj(List<Obj> l){
+
+	public ListObj(List<Obj> l) {
 		list = l;
 	}
 
@@ -64,9 +63,20 @@ public class ListObj extends Obj implements Iterable<Obj>{
 	public int indexOf(Object o){
 		return list.indexOf(o);
 	}
-	
+
 	public String toString(){
 		return Arrays.toString(list.toArray());
 	}
-	
+
+	@Override
+	public Obj __getattr__(String attr){
+		switch(attr){
+			case "len":
+				return new LObj(list.size());
+			
+			default:
+				return super.__getattr__(attr);
+		}
+	}
+
 }

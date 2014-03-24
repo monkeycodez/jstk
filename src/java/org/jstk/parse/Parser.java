@@ -3,6 +3,7 @@ package org.jstk.parse;
 import org.jstk.lex.*;
 import org.jstk.parse.expr.BlockExpr;
 import org.jstk.parse.expr.CodeExpr;
+import org.jstk.parse.expr.DotExpr;
 import org.jstk.parse.expr.LBraceExpr;
 import org.jstk.parse.expr.ListExpr;
 import org.jstk.parse.expr.NameExpr;
@@ -65,8 +66,8 @@ public class Parser{
 			case RPAREN:
 				return new RParenExpr();
 			case DOT:
-				//TODO: dot expr
-				return null;
+				Token n = lex.next();
+				return new DotExpr(n.getText(), n.getLineno());
 			case TAG:
 				return new TagExpr(t);
 			case EOF:

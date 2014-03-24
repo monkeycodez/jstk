@@ -11,7 +11,7 @@ public class StrObj extends Obj{
 	}
 	
 	@Override
-	public BoolObj __eq__(Obj o){
+	public Obj __eq__(Obj o){
 		if(o instanceof StrObj){
 			return BoolObj.toObj(str.equals(((StrObj)o).str));
 		}
@@ -24,7 +24,7 @@ public class StrObj extends Obj{
 	}
 
 	@Override
-	public BoolObj __ne__(Obj o){
+	public Obj __ne__(Obj o){
 		if(o instanceof StrObj){
 			return BoolObj.toObj(!str.equals(((StrObj)o).str));
 		}

@@ -1,8 +1,13 @@
 package org.jstk.parse;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.jstk.jlang.BoolObj;
 import org.jstk.jlang.Func;
+import org.jstk.jlang.JSTKClass;
 import org.jstk.jlang.JSTKRuntimeException;
 import org.jstk.jlang.NullObj;
 import org.jstk.jlang.Obj;
@@ -11,22 +16,23 @@ import org.jstk.jlang.StkFunc;
 
 public final class ExeEnv{
 
-	private Map<String, __ref> globals = new HashMap<>();
+	private final Map<String, __ref> globals = new HashMap<>();
 
-	private LinkedList<__frame> vstack = new LinkedList<>();
+	private final LinkedList<__frame> vstack = new LinkedList<>();
 
 	private int full_stacks = 1;
-	
+
 	private boolean ret = false;
 
 	private class __ref{
 
 		private Obj ref;
 
-		__ref(Obj r) {
+		__ref(final Obj r){
 			ref = r;
 		}
 
+		@Override
 		public String toString(){
 			return ref.toString();
 		}
@@ -40,27 +46,28 @@ public final class ExeEnv{
 
 		private int line_exit = -1;
 
-		private int frameno = full_stacks;
+		private final int frameno = full_stacks;
 
 		private boolean full_frame = true;
 
-		__frame(Map<String, __ref> fframe, String nfr) {
+		__frame(final Map<String, __ref> fframe, final String nfr){
 			nframe = nfr;
 			vframe = new HashMap<>(fframe);
 		}
 
-		__frame() {
+		__frame(){
 		}
 
+		@Override
 		public String toString(){
-			return "<FRAME> " + nframe + "@" + line_exit + " " +
-					frameno;
+			return "<FRAME> " + nframe + "@" + line_exit + " "
+				+ frameno;
 		}
 	}
 
-	public ExeEnv() {
+	public ExeEnv(){
 		// Defaults
-		__frame gbl = new __frame();
+		final __frame gbl = new __frame();
 		gbl.nframe = "<GLOBAL>";
 		gbl.vframe = globals;
 		vstack.push(gbl);
@@ -94,25 +101,27 @@ public final class ExeEnv{
 		add_global_func(Func.while_loop);
 		add_global_func(Func.try_f);
 
+		add_global_func(JSTKClass.defclass);
+
 		add_global_func(StkFunc.defun);
 
 	}
 
-	public void add_global_func(Func f){
+	public void add_global_func(final Func f){
 		globals.put(f.sname(), new __ref(f));
 	}
 
-	public Obj get(String str){
-		__ref r = vstack.peek().vframe.get(str);
+	public Obj get(final String str){
+		final __ref r = vstack.peek().vframe.get(str);
 		if(r == null){
-			throw new JSTKRuntimeException("No name " + str +
-					" found");
+			throw new JSTKRuntimeException("No name " + str
+				+ " found");
 		}
 		return r.ref;
 	}
 
-	public void set_local(String name, Obj val){
-		__ref r = vstack.peek().vframe.get(name);
+	public void set_local(final String name, final Obj val){
+		final __ref r = vstack.peek().vframe.get(name);
 		if(r != null){
 			r.ref = val;
 			return;
@@ -121,26 +130,26 @@ public final class ExeEnv{
 		vstack.peek().vframe.put(name, new __ref(val));
 	}
 
-	public void set_local_new(String name, Obj val){
+	public void set_local_new(final String name, final Obj val){
 		vstack.peek().vframe.put(name, new __ref(val));
 	}
 
-	public void push_frame(String fname){
+	public void push_frame(final String fname){
 		// System.err.println("Push frame");
 		full_stacks++;
-		__frame nframe = new __frame(globals, fname);
+		final __frame nframe = new __frame(globals, fname);
 		vstack.push(nframe);
 	}
 
 	public void push_half_fram(){
 		push_half_frame("<ERROR>");
 	}
-	
-	public void push_half_frame(String fname){
+
+	public void push_half_frame(final String fname){
 		// System.err.println("Push half frame");
 		full_stacks++;
-		__frame old = vstack.peek();
-		__frame nframe = new __frame(old.vframe, fname);
+		final __frame old = vstack.peek();
+		final __frame nframe = new __frame(old.vframe, fname);
 		nframe.full_frame = false;
 		vstack.push(nframe);
 	}
@@ -155,7 +164,7 @@ public final class ExeEnv{
 		System.err.println(vstack.peek().toString());
 	}
 
-	public void set_cline(int c){
+	public void set_cline(final int c){
 		vstack.peek().line_exit = c;
 	}
 
@@ -171,9 +180,9 @@ public final class ExeEnv{
 		return vstack.peek().nframe;
 	}
 
-	public List<Integer> get_line_trace(int frameno){
-		LinkedList<Integer> trace = new LinkedList<>();
-		for(__frame fr : vstack){
+	public List<Integer> get_line_trace(final int frameno){
+		final LinkedList<Integer> trace = new LinkedList<>();
+		for(final __frame fr : vstack){
 			if(fr.frameno < frameno){
 				break;
 			}
@@ -184,9 +193,9 @@ public final class ExeEnv{
 		return trace;
 	}
 
-	public List<String> get_name_trace(int frameno){
-		LinkedList<String> trace = new LinkedList<>();
-		for(__frame fr : vstack){
+	public List<String> get_name_trace(final int frameno){
+		final LinkedList<String> trace = new LinkedList<>();
+		for(final __frame fr : vstack){
 			if(fr.frameno == frameno - 1){
 				break;
 			}
@@ -196,11 +205,11 @@ public final class ExeEnv{
 		}
 		return trace;
 	}
-	
+
 	public boolean is_ret(){
 		return ret;
 	}
-	
+
 	public void fret(){
 		ret = !ret;
 	}

@@ -2,14 +2,14 @@
  *	an example JSTK program
  */
  
- (
+(
  	,+=
  	(,val ,var)
  	,{
- 		var eval val + var set
- 	}
- 	:macro
- ) defun
+		var eval val + var set
+	}
+	:macro
+) defun
  
  3 ,i set
  3 ,i +=
@@ -17,10 +17,10 @@
  
  :macro println
  
- (
+(
  	,{ c }
  	,{ "catch" println }
- ) try 
+) try 
 
 (1 2 3 4) ,lst set
 "Length of " print lst print " = " print
@@ -31,6 +31,8 @@ lst println
 "Testing set" println
 true 0 lst .set
 lst println
+5 lst ,.num set
+lst .num println
 
 (
 	,onrange
@@ -54,11 +56,32 @@ lst println
 	:macro
 ) defun
 
-4 ,c set
+0 ,c set
 
 ,{ 
 	c + println 
 } 1 10 onrange
+
+(
+	,exclass
+	(
+		,__<init>__
+		(,this)
+		,{
+			"Initalizing exclass" println
+			this .tostr println
+		}
+	) defun
+	(
+		,tostr
+		(,this)
+		,"exclass tostr"
+	)defun
+) defclass	
+
+exclass ,cl set
+
+cl . tostr println
 
 
 exit
